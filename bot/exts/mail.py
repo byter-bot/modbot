@@ -160,6 +160,19 @@ class Mail(commands.Cog):
         await user.send(message)
         await ctx.send(f'Sent message to {self.last_dm} ({self.last_dm.id})')
 
+    @commands.command(aliases=['hist'])
+    async def history(self, ctx: commands.Context, user: discord.User, max_messages: int = 8):
+        async for message_chunk in user.history(limit=max_messages).chunk(25):
+            embed = discord.Embed(color=0x5050fa, title=f'Message history with {user} ({user.id})')
+            for message in message_chunk:
+                content = message.content
+                if len(content) > 1024:
+                    content = content[:1023] + '…'
+
+                embed.add_field(name=f'From {message.author}', value=content, inline=False)
+
+            await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Mail(bot))
