@@ -14,6 +14,13 @@ class Mail(commands.Cog):
         if bot.is_ready():
             self.mail = bot.get_channel(bot.config['mail_channel'])
 
+    def cog_check(self, ctx: commands.Context):
+        for role in ctx.author.roles:
+            if role.name in ['Créu Crew', 'Créu Curator', 'Créu Captain']:
+                return True
+
+        return False
+
     @commands.Cog.listener()
     async def on_ready(self):
         self.mail = self.bot.get_channel(self.bot.config['mail_channel'])

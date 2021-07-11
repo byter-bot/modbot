@@ -37,9 +37,6 @@ class ByterModbot(commands.Bot):
             except commands.ExtensionError:
                 traceback.print_exc()
 
-    def global_check(self, ctx):
-        ...
-
 
 bot = ByterModbot()
 bot.run(open('TOKEN').read())
