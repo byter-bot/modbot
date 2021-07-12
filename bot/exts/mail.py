@@ -172,9 +172,13 @@ class Mail(commands.Cog):
 
     @commands.command(aliases=['hist'])
     async def history(self, ctx: commands.Context, user: discord.User, max_messages: int = 8):
+        embed = discord.Embed(color=0x5050fa, title=f'Message history with {user} ({user.id})')
         async for message_chunk in user.history(limit=max_messages).chunk(25):
-            embed = discord.Embed(color=0x5050fa, title=f'Message history with {user} ({user.id})')
             for message in message_chunk:
+                if len(embed) > 4000:
+                    await ctx.send(embed=embed)
+                    embed = discord.Embed(color=0x5050fa)
+
                 content = message.content
                 if len(content) > 1024:
                     content = content[:1023] + '…'
@@ -182,6 +186,7 @@ class Mail(commands.Cog):
                 embed.add_field(name=f'From {message.author}', value=content, inline=False)
 
             await ctx.send(embed=embed)
+            embed = discord.Embed(color=0x5050fa)
 
 
 def setup(bot):
