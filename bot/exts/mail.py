@@ -160,12 +160,15 @@ class Mail(commands.Cog):
             return
 
         await self.last_dm.send(message)
-        await ctx.send(f'Sent message to {self.last_dm} ({self.last_dm.id})')
+        await ctx.send(
+            f'Sent message to {self.last_dm} ({self.last_dm.mention})',
+            allowed_mentions=None
+        )
 
     @commands.command(aliases=['msg', 'm'])
     async def message(self, ctx: commands.Context, user: discord.User, *, message: str):
         await user.send(message)
-        await ctx.send(f'Sent message to {self.last_dm} ({self.last_dm.id})')
+        await ctx.send(f'Sent message to {user} ({user.mention})', allowed_mentions=None)
 
     @commands.command(aliases=['hist'])
     async def history(self, ctx: commands.Context, user: discord.User, max_messages: int = 8):
