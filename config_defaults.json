@@ -1,4 +1,5 @@
 {
     "prefix": [],
-    "mail_channel": 0
+    "mail_channel": 0,
+    "main_guild": 0
 }
